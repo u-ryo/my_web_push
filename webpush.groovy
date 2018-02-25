@@ -40,7 +40,10 @@ Security.addProvider(new BouncyCastleProvider())
 keyPair = getKeyPair()
 publicKey = encodeBase64Url(Utils.savePublicKey((ECPublicKey) keyPair.getPublic()))
 privateKey = encodeBase64Url(Utils.savePrivateKey((ECPrivateKey) keyPair.getPrivate()))
-println("publicKey:${publicKey}, privateKey:${privateKey}")
+log.info("publicKey:${publicKey}, privateKey:${privateKey}")
+
+push = new PushService(keyPair, "http://localhost")
+
 
 staticFiles.externalLocation(Paths.get('.').toRealPath().toString())
 get('/publicKey', { req, res ->
@@ -55,7 +58,6 @@ post('/subscribe', { req, res ->
   ''
      });
 post('/push', { req, res ->
-  push = new PushService(publicKey, privateKey, "http://localhost")
   response = push.send(
     new Notification(client.notificationEndPoint, client.publicKey, client.auth,
                      req.body().bytes))
