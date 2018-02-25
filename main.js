@@ -61,7 +61,7 @@ function prepareNotification() {
 }
 
 function setButtonState(state) {
-    $('#btnPushNotifications').prop('disabled', state);
+    $('#btnPushNotifications').prop('disabled', !state);
 }
 
 function stringToBuffer(src) {
